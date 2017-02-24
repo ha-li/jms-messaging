@@ -7,11 +7,11 @@ allprojects {
               name   : "$project.name",
               version: '0.1'
       ]
-      artifactBaseName = 'jms-messaging'
+      //artifactBaseName = 'jms-messaging'
    }
 }
 
-allprojects {
+subprojects {
    apply plugin: 'java'
    apply from: "$rootDir/gradle/jacoco.gradle"
 
