@@ -1,0 +1,38 @@
+allprojects {
+   apply plugin: 'idea'
+
+   ext {
+      projectIds = [
+              group  : 'com.gecko',
+              name   : "$project.name",
+              version: '0.1'
+      ]
+      artifactBaseName = 'jms-messaging'
+   }
+}
+
+allprojects {
+   apply plugin: 'java'
+   //apply from: "$rootDir/gradle/jacoco.gradle"
+
+   repositories {
+      mavenCentral ()
+   }
+   
+   dependencies {
+      testCompile 'junit:junit:4.12'
+   }
+
+   task sourcesJar (type: Jar) {
+      classifier 'sources'
+      from sourceSets.main.allSource
+   }
+
+   artifacts {
+      archives sourcesJar
+   }
+}
+
+task wrapper (type: Wrapper) {
+   gradleVersion = '3.2'
+}
