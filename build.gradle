@@ -13,7 +13,7 @@ allprojects {
 
 allprojects {
    apply plugin: 'java'
-   //apply from: "$rootDir/gradle/jacoco.gradle"
+   apply from: "$rootDir/gradle/jacoco.gradle"
 
    repositories {
       mavenCentral ()
