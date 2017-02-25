@@ -5,5 +5,6 @@ repositories {
 }
 
 dependencies {
+    compile 'org.apache.activemq:activemq-client:5.14.3'
     testCompile 'junit:junit:4.12'
 }
