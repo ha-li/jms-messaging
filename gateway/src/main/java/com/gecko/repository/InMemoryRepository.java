@@ -43,7 +43,7 @@ public class InMemoryRepository {
    }
 
    private static final String DEFAULT_PRODUCER_PROTOCOL = "nio";
-   private static final String DEFAULT_CONSUMER_PROTOCOL = "vm";
+   private static final String DEFAULT_CONSUMER_PROTOCOL = "ssl";
 
    // uses producer's default protocol which is nio
    public static String getProducerBrokerUrl () {
