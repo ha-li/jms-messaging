@@ -1,5 +1,6 @@
 package com.gecko.message.producer;
 
+import com.gecko.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.Connection;
@@ -16,7 +17,8 @@ import javax.jms.TextMessage;
 public class PlainTextProducer {
 
    public static void main (String[] args) throws JMSException {
-      String  jmsBrokerUrl = "tcp://localhost:61616";
+      //String  jmsBrokerUrl = "tcp://127.0.0.1:61616";
+      String jmsBrokerUrl = InMemoryRepository.getProducerBrokerUrl ();
       ConnectionFactory connectionFactory = new ActiveMQConnectionFactory (jmsBrokerUrl);
       String connectUser = "admin";
       String connectPwd = "admin";

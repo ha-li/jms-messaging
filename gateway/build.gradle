@@ -5,6 +5,9 @@ repositories {
 }
 
 dependencies {
-    compile 'org.apache.activemq:activemq-client:5.14.3'
+    compile 'org.apache.activemq:activemq-all:5.14.3'
+    // these two libraries are required for http(s) transport connectors
+    compile 'org.apache.httpcomponents:httpclient:4.5.3'
+    compile 'com.thoughtworks.xstream:xstream:1.4.9'
     testCompile 'junit:junit:4.12'
 }
