@@ -40,11 +40,12 @@ public class InMemoryRepository {
    private static final String DEFAULT_PRODUCER_PROTOCOL = "nio";
    private static final String DEFAULT_CONSUMER_PROTOCOL = "ssl";
 
+   // uses producer's default protocol which is nio
    public static String getProducerBrokerUrl () {
       return getProducerBrokerUrl (DEFAULT_PRODUCER_PROTOCOL);
    }
 
-   // uses by default ssl protocol
+   // uses the consumer default ssl protocol, which is ssl
    public static String getConsumerBrokerUrl () {
       return getConsumerBrokerUrl (DEFAULT_CONSUMER_PROTOCOL);
    }
