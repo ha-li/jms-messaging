@@ -35,10 +35,15 @@ public class InMemoryRepository {
       consumerMap.put ("ssl", "ssl://localhost:61617?trace=true");
       producerMap.put ("ssl", "ssl://localhost:61617?trace=true");
 
+      // using an embedded broker - don't need to start up jms broker separately
+      // the embed broker can listen to other clients using nio on 61618
+      // see embedded brokers in ActiveMq in Action (ch 4)
+      consumerMap.put ("vm", "vm:broker:(nio://localhost:61618)?brokerName=crazy");
+
    }
 
    private static final String DEFAULT_PRODUCER_PROTOCOL = "nio";
-   private static final String DEFAULT_CONSUMER_PROTOCOL = "ssl";
+   private static final String DEFAULT_CONSUMER_PROTOCOL = "vm";
 
    // uses producer's default protocol which is nio
    public static String getProducerBrokerUrl () {
