@@ -30,6 +30,15 @@ public class JmsConnectionFactory {
       return factory.createConnection (connectUser, connectPwd);
    }
 
+   public static Connection createProducerConnection () throws JMSException {
+      String producerBrokerUrl = InMemoryRepository.getProducerBrokerUrl ();
+      return createConnection(producerBrokerUrl);
+   }
+
+   public static Connection createConnection (String brokerUrl) throws JMSException {
+      return createConnection (brokerUrl, connectUser, connectPwd);
+   }
+
    public static Connection createConnection (String brokerUrl, String connectUser, String connectPasswd) throws JMSException{
       return (new ActiveMQConnectionFactory (brokerUrl)).createConnection(connectUser, connectPasswd);
    }

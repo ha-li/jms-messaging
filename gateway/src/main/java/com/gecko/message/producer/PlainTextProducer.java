@@ -1,6 +1,7 @@
 package com.gecko.message.producer;
 
 import com.gecko.message.JmsConnectionFactory;
+import com.gecko.repository.InMemoryRepository;
 
 import javax.jms.Connection;
 import javax.jms.Destination;
@@ -22,7 +23,13 @@ public class PlainTextProducer {
       MessageProducer producer = null;
 
       try {
-         connection = JmsConnectionFactory.createConnection ();
+         // this is an example of a network connector, see ActiveMQ in Action, ch 4
+         // network connectors connect 2 brokers together, here the producer
+         // is listening to broker 2, which the producer sends to broker 1,
+         // because of the network connection, producer and consumer
+         // are still able to send messages even though they are using
+         // different brokers ... cool
+         connection = JmsConnectionFactory.createProducerConnection ();
          session = connection.createSession (false, Session.AUTO_ACKNOWLEDGE);
          Destination destination = session.createQueue(destinationName);
          producer = session.createProducer (destination);
