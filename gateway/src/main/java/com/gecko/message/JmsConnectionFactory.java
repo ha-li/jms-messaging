@@ -15,6 +15,7 @@ public class JmsConnectionFactory {
    private static String brokerUrl;
    private static String connectUser = "admin";
    private static String connectPwd = "admin";
+
    static {
       brokerUrl = InMemoryRepository.getBrokerUrl ();
       factory = new ActiveMQConnectionFactory (brokerUrl);
@@ -29,11 +30,7 @@ public class JmsConnectionFactory {
       return factory.createConnection (connectUser, connectPwd);
    }
 
-   /* public Session getSession (boolean inTransaction, int type) throws JMSException {
-      return getConnection ().createSession(inTransaction, type);
+   public static Connection createConnection (String brokerUrl, String connectUser, String connectPasswd) throws JMSException{
+      return (new ActiveMQConnectionFactory (brokerUrl)).createConnection(connectUser, connectPasswd);
    }
-
-   public Session getSession () throws JMSException {
-      return getSession(false, Session.AUTO_ACKNOWLEDGE);
-   } */
 }
