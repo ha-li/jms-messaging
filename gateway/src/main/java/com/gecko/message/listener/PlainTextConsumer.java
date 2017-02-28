@@ -1,10 +1,8 @@
 package com.gecko.message.listener;
 
-import com.gecko.repository.InMemoryRepository;
-import org.apache.activemq.ActiveMQConnectionFactory;
+import com.gecko.message.JmsConnectionFactory;
 
 import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -29,18 +27,13 @@ public class PlainTextConsumer implements MessageListener {
    }
 
    public static void main (String[] args) throws JMSException {
-      //String jmsBrokerUrl = "tcp://127.0.0.1:61616";
-      String jmsBrokerUrl = InMemoryRepository.getConsumerBrokerUrl ();
-      ConnectionFactory connectionFactory = new ActiveMQConnectionFactory (jmsBrokerUrl);
-      String connectUser = "admin";
-      String connectPws = "admin";
       Connection connection = null;
       Session session = null;
 
       String destinationName = "simple.test.queue";
       MessageConsumer consumer;
       try {
-         connection = connectionFactory.createConnection (connectUser, connectPws);
+         connection = JmsConnectionFactory.getConnection ();
          session = connection.createSession (false, Session.AUTO_ACKNOWLEDGE);
          Destination destination = session.createQueue (destinationName);
 
