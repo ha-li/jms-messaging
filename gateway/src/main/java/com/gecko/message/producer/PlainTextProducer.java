@@ -22,7 +22,7 @@ public class PlainTextProducer {
       MessageProducer producer = null;
 
       try {
-         connection = JmsConnectionFactory.getConnection ();
+         connection = JmsConnectionFactory.createConnection ();
          session = connection.createSession (false, Session.AUTO_ACKNOWLEDGE);
          Destination destination = session.createQueue(destinationName);
          producer = session.createProducer (destination);

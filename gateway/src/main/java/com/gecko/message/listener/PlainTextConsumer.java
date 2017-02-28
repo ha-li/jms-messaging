@@ -33,7 +33,7 @@ public class PlainTextConsumer implements MessageListener {
       String destinationName = "simple.test.queue";
       MessageConsumer consumer;
       try {
-         connection = JmsConnectionFactory.getConnection ();
+         connection = JmsConnectionFactory.createConnection ();
          session = connection.createSession (false, Session.AUTO_ACKNOWLEDGE);
          Destination destination = session.createQueue (destinationName);
 

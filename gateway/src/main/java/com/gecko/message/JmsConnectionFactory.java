@@ -21,7 +21,7 @@ public class JmsConnectionFactory {
       factory = new ActiveMQConnectionFactory (brokerUrl);
    }
 
-   public static Connection getConnection () throws JMSException {
+   public static Connection createConnection () throws JMSException {
       if (factory == null) {
          brokerUrl = InMemoryRepository.getBrokerUrl ();
          factory = new ActiveMQConnectionFactory (brokerUrl);
