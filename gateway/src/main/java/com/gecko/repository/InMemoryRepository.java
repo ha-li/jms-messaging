@@ -8,32 +8,25 @@ import java.util.Map;
  */
 public class InMemoryRepository {
    private static Map<String, String> brokerUrlMap = new HashMap<String, String>();
-   private static Map<String, String> producerMap = new HashMap<String, String> ();
 
    static {
       // tcp
       brokerUrlMap.put ("tcp", "tcp://localhost:61616?trace=true");
-      //producerMap.put ("tcp", "tcp://localhost:61616?trace=true");
 
       //nio
       brokerUrlMap.put ("nio", "nio://localhost:61618?trace=true");
-      //producerMap.put ("nio", "nio://localhost:61618?trace=true");
 
       //udp
       brokerUrlMap.put ("udp", "udp://localhost:6717?trace=true");
-      //producerMap.put ("udp", "udp://localhost:6717?trace=true");
 
       //http
       brokerUrlMap.put ("http", "http://localhost:8080?trace=true");
-      //producerMap.put ("http", "http://localhost:8080?trace=true");
 
       //http
       brokerUrlMap.put ("https", "https://localhost:1443?trace=true");
-      //producerMap.put ("https", "https://localhost:1443?trace=true");
 
       //ssl
       brokerUrlMap.put ("ssl", "ssl://localhost:61617?trace=true");
-      //producerMap.put ("ssl", "ssl://localhost:61617?trace=true");
 
       // using an embedded broker - don't need to start up jms broker separately
       // the embed broker can listen to other clients using nio on 61618
