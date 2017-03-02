@@ -1,4 +1,6 @@
-package com.gecko.message.producer;
+package com.gecko.message.jms.producer;
+
+import com.gecko.message.jms.AbstractSessionProvider;
 
 import javax.jms.Connection;
 import javax.jms.Destination;
@@ -10,7 +12,7 @@ import javax.jms.TextMessage;
 /**
  * Created by hlieu on 02/24/17.
  */
-public class PlainTextProducer extends AbstractProducer implements JmsProducer {
+public class PlainTextProducer extends AbstractSessionProvider implements JmsProducer {
 
    private Connection connection;
    public PlainTextProducer (Connection connection) {

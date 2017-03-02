@@ -1,15 +1,12 @@
 package com.gecko.message;
 
-import com.gecko.message.JmsConnectionFactory;
-import com.gecko.message.producer.JmsProducer;
-import com.gecko.message.producer.PlainTextProducer;
+import com.gecko.message.jms.JmsConnectionFactory;
+import com.gecko.message.jms.producer.JmsProducer;
+import com.gecko.message.jms.producer.PlainTextProducer;
+import com.gecko.repository.DestinationNameRepository;
 
 import javax.jms.Connection;
-import javax.jms.Destination;
 import javax.jms.JMSException;
-import javax.jms.MessageProducer;
-import javax.jms.Session;
-import javax.jms.TextMessage;
 
 /**
  * Created by hlieu on 03/1/17.
@@ -18,7 +15,6 @@ public class JmsProducerExample {
    public static void main (String[] args) throws JMSException {
 
       Connection connection = null;
-      String destinationName = "simple.test.queue";
 
       try {
          // this is an example of a network connector, see ActiveMQ in Action, ch 4
@@ -29,9 +25,13 @@ public class JmsProducerExample {
          // different brokers ... cool
          connection = JmsConnectionFactory.createConnection ();
          JmsProducer producer = new PlainTextProducer (connection);
-         producer.sendMessage(destinationName, "Hello Ninja");
+         producer.sendMessage(
+                 DestinationNameRepository.defaultDestination (),
+                 "Hello Ninja"
+         );
 
          System.out.println ("Message sent");
+
       } catch (JMSException jme) {
          jme.printStackTrace ();
       } catch (Exception e) {
