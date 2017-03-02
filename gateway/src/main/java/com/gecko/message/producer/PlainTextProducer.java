@@ -20,10 +20,10 @@ public class PlainTextProducer extends AbstractProducer implements JmsProducer {
    public void sendMessage (String destinationName, String message)throws JMSException {
       Session session = super.session(this.connection);
       Destination destination = session.createQueue (destinationName);
-      MessageProducer producer = null;
+      //MessageProducer producer = null;
 
       if (session != null) {
-         producer = session.createProducer (destination);
+         MessageProducer producer = session.createProducer (destination);
          TextMessage msg = session.createTextMessage(message);
          producer.send (msg);
 

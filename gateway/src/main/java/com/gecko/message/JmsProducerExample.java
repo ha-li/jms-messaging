@@ -18,10 +18,7 @@ public class JmsProducerExample {
    public static void main (String[] args) throws JMSException {
 
       Connection connection = null;
-      Session session = null;
-
       String destinationName = "simple.test.queue";
-      // MessageProducer producer = null;
 
       try {
          // this is an example of a network connector, see ActiveMQ in Action, ch 4
@@ -41,10 +38,6 @@ public class JmsProducerExample {
          e.printStackTrace ();
       } finally {
 
-         if(session != null) {
-            //session.commit();
-            session.close();
-         }
          if (connection != null) {
             connection.close ();
          }
