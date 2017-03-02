@@ -8,5 +8,5 @@ import javax.jms.JMSException;
  * Created by hlieu on 03/1/17.
  */
 public interface JmsProducer {
-   public void sendMessage(String destinationName, String message) throws JMSException;
+   void sendMessage(String destinationName, String message) throws JMSException;
 }
