@@ -2,7 +2,7 @@ package com.gecko.message;
 
 import com.gecko.message.jms.JmsConnectionFactory;
 import com.gecko.message.jms.listener.JmsConsumerRegister;
-import com.gecko.repository.DestinationNameRepository;
+import com.gecko.repository.Destinations;
 
 import javax.jms.Connection;
 import javax.jms.JMSException;
@@ -22,7 +22,7 @@ public class JmsConsumerExample {
          connection.start();
 
          consumer = new JmsConsumerRegister (connection);
-         consumer.registerConsumer (DestinationNameRepository.defaultDestination ());
+         consumer.registerConsumer (Destinations.defaultDestination ());
 
          System.out.println ("Waiting for messages...");
 

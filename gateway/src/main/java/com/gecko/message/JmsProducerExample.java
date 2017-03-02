@@ -3,7 +3,7 @@ package com.gecko.message;
 import com.gecko.message.jms.JmsConnectionFactory;
 import com.gecko.message.jms.producer.JmsProducer;
 import com.gecko.message.jms.producer.PlainTextProducer;
-import com.gecko.repository.DestinationNameRepository;
+import com.gecko.repository.Destinations;
 
 import javax.jms.Connection;
 import javax.jms.JMSException;
@@ -26,7 +26,7 @@ public class JmsProducerExample {
          connection = JmsConnectionFactory.createConnection ();
          JmsProducer producer = new PlainTextProducer (connection);
          producer.sendMessage(
-                 DestinationNameRepository.defaultDestination (),
+                 Destinations.defaultDestination (),
                  "Hello Ninja"
          );
 
