@@ -35,6 +35,7 @@ public class InMemoryRepository {
       // where ... is the other protocol that different clients connect
       // to the embedded broker
       brokerUrlMap.put ("vm", "vm:broker:(nio://localhost:61618)?brokerName=crazy");
+      brokerUrlMap.put ("vm_producer", "nio://localhost:61618?trace=true");
 
       // an example of a network connector, producer is connecting to broker 2
       // where the protocol port number is broker1's port + 1, so for ssl, broker 2
