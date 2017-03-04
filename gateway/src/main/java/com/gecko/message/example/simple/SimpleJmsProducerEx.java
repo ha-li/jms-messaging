@@ -1,4 +1,4 @@
-package com.gecko.message.simple.example;
+package com.gecko.message.example.simple;
 
 import com.gecko.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;
