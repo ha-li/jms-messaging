@@ -5,6 +5,15 @@ import java.util.Map;
 
 /**
  * Created by hlieu on 02/26/17.
+ *
+ * In order to use ssl protocol, the following jvm properties need to be
+ * defined in your executable. You must have created these public and private keys,
+ * see ActiveMQ in Action, ch 3/4.
+ *
+ *  -Djavax.net.ssl.keyStore=/Users/hlieu/Security/KeyStores/jms.client.ks
+ *  -Djavax.net.ssl.keyStorePassword=jms123
+ *  -Djavax.net.ssl.trustStore=/Users/hlieu/Security/KeyStores/jms.client.ts
+ *
  */
 public class InMemoryRepository {
    private static Map<String, String> brokerUrlMap = new HashMap<String, String>();
@@ -41,6 +50,8 @@ public class InMemoryRepository {
       // where the protocol port number is broker1's port + 1, so for ssl, broker 2
       // port number is 61619
       brokerUrlMap.put ("producer", "nio://localhost:61621?trace=true");
+
+      brokerUrlMap.put ("failover", "failover:(nio://localhost:61620,tcp://localhost:61617)");
    }
 
    private static final String DEFAULT_PROTOCOL = "ssl";
