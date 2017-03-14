@@ -51,9 +51,19 @@ public class InMemoryRepository {
       // port number is 61619
       brokerUrlMap.put ("producer", "nio://localhost:61621?trace=true");
 
+      // failover protocol will allow a disconnected client to attempt to
+      // reconnect automatically
       brokerUrlMap.put ("failover", "failover:(nio://localhost:61620,tcp://localhost:61617)");
 
+      // multi cast is used by clients to auto discover a broker, or
+      // by brokers to form auto networks of brokers
       brokerUrlMap.put ("multicast", "discovery:(multicast://default)");
+
+      // a peer protocol is used to form a network of embedded brokers,
+      // so you should NOT start up a broker, when using peer protocol
+      // in order to form the network, the peer name should be the same,
+      // here it is group1
+      brokerUrlMap.put ("peer", "peer://group1");
    }
 
    private static final String DEFAULT_PROTOCOL = "ssl";
