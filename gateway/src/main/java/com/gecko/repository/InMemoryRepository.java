@@ -52,6 +52,8 @@ public class InMemoryRepository {
       brokerUrlMap.put ("producer", "nio://localhost:61621?trace=true");
 
       brokerUrlMap.put ("failover", "failover:(nio://localhost:61620,tcp://localhost:61617)");
+
+      brokerUrlMap.put ("multicast", "discovery:(multicast://default)");
    }
 
    private static final String DEFAULT_PROTOCOL = "ssl";
