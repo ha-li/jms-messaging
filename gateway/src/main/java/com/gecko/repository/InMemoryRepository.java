@@ -64,6 +64,9 @@ public class InMemoryRepository {
       // in order to form the network, the peer name should be the same,
       // here it is group1
       brokerUrlMap.put ("peer", "peer://group1");
+
+      // fanout protocol
+      brokerUrlMap.put ("fanout", "fanout:(static:(tcp://localhost:61616,tcp://localhost:61617))");
    }
 
    private static final String DEFAULT_PROTOCOL = "ssl";
