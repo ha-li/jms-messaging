@@ -8,4 +8,21 @@ The following instructions allow you to configure mysql as the data store.
     a) mysql-connector-java-5.1.19.jar  (Mysql driver)
     b) commons-dbcp2-2.1.1.jar  (datasource adapter for Java 7)
    and install put into $ACTIVEMQ/lib
-4. Open up Mysql Workbench and add activemq schema    
+4. Open up Mysql Workbench and add activemq schema and activemq user
+   -Give activemq user access to activemq schema.
+   -set the following configuration into the conf file ($ACTIVEMQ/conf/activemq.xml)
+   <bean id="mysql-ds" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+           <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+           <property name="url" value="jdbc:mysql://localhost/activemq?relaxAutoCommit=true" />
+           <property name="username" value="activemq" />
+           <property name="password" value="activemq" />
+           <!--
+           <property name="maxActive" value="100" />
+           -->
+           <property name="poolPreparedStatements" value="true" />
+    </bean>
+
+5. Start up activemq ($ACTIVEMQ/bin/activemq console) and make sure no erros occur
+   during start up (which is why console is used)
+6. In the console, you can send a message to the broker, and that should trigger
+   the creation of the ACTIVEMQ tables in the schema.

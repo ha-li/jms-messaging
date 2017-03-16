@@ -29,10 +29,13 @@ public class SimpleJmsProducerEx {
       Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
       Destination destination = session.createQueue("Queue.simple");
       MessageProducer producer = session.createProducer (destination);
-      TextMessage msg = session.createTextMessage("A simple message");
 
-      System.out.println ("Sending a message");
-      producer.send (msg);
+      for (int i = 0; i < 10; i++) {
+         TextMessage msg = session.createTextMessage ("A simple message " + i);
+
+         System.out.println ("Sending a message");
+         producer.send (msg);
+      }
       producer.close ();
       session.close ();
       connection.close ();
