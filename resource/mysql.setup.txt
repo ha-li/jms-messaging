@@ -5,7 +5,7 @@ The following instructions allow you to configure mysql as the data store.
 1. Install Mysql
 2. Install ActiveMQ
 3. download
-    a) mysql-connector-java-5.1.19.jar  (Mysql driver)
+    a) mysql-connector-java-5.1.41.jar  (Mysql driver)
     b) commons-dbcp2-2.1.1.jar  (datasource adapter for Java 7)
    and install put into $ACTIVEMQ/lib
 4. Open up Mysql Workbench and add activemq schema and activemq user
