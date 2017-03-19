@@ -15,7 +15,7 @@ import javax.jms.TextMessage;
 /**
  * Created by hlieu on 03/3/17.
  */
-public class SimpleJmsConsumerEx {
+public class SimpleConsumer {
 
    public static void main (String[] args) throws JMSException, InterruptedException {
 
@@ -26,7 +26,7 @@ public class SimpleJmsConsumerEx {
 
       String nioConnection = InMemoryRepository.getBrokerUrl("nio");
       ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(nioConnection);
-      Connection connection = connectionFactory.createConnection ("admin", "admin");
+      Connection connection = connectionFactory.createConnection ();
       connection.start ();
       Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
       Destination destination = session.createQueue("Queue.simple");

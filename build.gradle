@@ -36,3 +36,8 @@ subprojects {
 task wrapper (type: Wrapper) {
    gradleVersion = '3.2'
 }
+
+task copyAmqConf (type: Copy) {
+   from '/Users/hlieu/ActiveMQ/amq-broker-1/conf/activemq.xml'
+   into 'resource'
+}
