@@ -85,6 +85,17 @@
               </policyEntries>
             </policyMap>
         </destinationPolicy>
+        
+        <plugins>
+           <!--
+           <simpleAuthenticationPlugin>
+             <users>
+               <authenticationUser username="admin" password="bob" groups="admins,publishers,consumers"/>
+             </users> 
+           </simpleAuthenticationPlugin>
+           -->
+           <jaasAuthenticationPlugin configuration="activemq" />
+        </plugins>
 
         <!-- my own ssl certs -->
         <sslContext>

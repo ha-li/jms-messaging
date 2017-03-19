@@ -24,7 +24,7 @@ public class SimpleProducer {
 
       String nioConnection = InMemoryRepository.getBrokerUrl("nio");
       ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(nioConnection);
-      Connection connection = connectionFactory.createConnection ("admin", "tellme");
+      Connection connection = connectionFactory.createConnection ("admin", "admin");
       connection.start ();
       Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
       Destination destination = session.createQueue("Queue.simple");
