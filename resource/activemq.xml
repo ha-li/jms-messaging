@@ -38,6 +38,7 @@
         </property>
     </bean>
 
+
    <!-- Allows accessing the server log -->
     <bean id="logQuery" class="io.fabric8.insight.log.log4j.Log4jLogQuery"
           lazy-init="false" scope="singleton"
@@ -65,6 +66,13 @@
         The <broker> element is used to configure the ActiveMQ broker.
     -->
     <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}">
+ <!--
+        Uncomment this to add support for MessageAuthorzationPolicy
+        <messageAuthorizationPolicy>
+           <bean class="com.gecko.broker.security.authorization.MessageAuthorization"
+                xmlns="http://www.springframework.org/schema/beans" />
+        </messageAuthorizationPolicy>
+ -->
 
         <destinationPolicy>
             <policyMap>
