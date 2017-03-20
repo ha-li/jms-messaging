@@ -46,6 +46,7 @@
     </bean>
     
     <!--
+        HL
         MySql datasource setup, gets used by broker below.
         in order to use mysql you have to install 2 optional jars into $ACTIVEMQ/lib
          1. commons-dbcp2-2.1.1.jar (for java 7)
@@ -66,9 +67,12 @@
         The <broker> element is used to configure the ActiveMQ broker.
     -->
     <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}">
- <!--
-        Uncomment this to add support for MessageAuthorzationPolicy
- -->
+        <!--
+           HL
+           Add support for MessageAuthorzationPolicy in the broker.
+           The bean class is a custom implementation, see gitdir/jms-messaging/broker/src/...
+           for the custom implementation. 
+        -->
         <messageAuthorizationPolicy>
            <bean class="com.gecko.broker.security.authorization.MessageAuthorization"
                 xmlns="http://www.springframework.org/schema/beans" />
@@ -102,20 +106,29 @@
              </users> 
            </simpleAuthenticationPlugin>
            -->
+
+           <!--
+             The following is a configuration context in the $ACTIVEMQ_HOME/conf/login.config file
+             that defines the built in jaas plugins. 
+           -->
            <jaasAuthenticationPlugin configuration="activemq" />
         </plugins>
 
-        <!-- my own ssl certs -->
+        <!-- 
+           HL
+           my own ssl certs 
+        -->
         <sslContext>
           <sslContext keyStore="file:/Users/hlieu/Security/KeyStores/jms.broker.ks" keyStorePassword="jms123" />
         </sslContext>
 
         <!--
+          HL
+          Default ssl certs that come with ActiveMQ
         <sslContext>
           <sslContext keyStore="file:${activemq.base}/conf/broker.ks" keyStorePassword="password" />
         </sslContext>
         -->
-
 
         <!--
             The managementContext is used to configure how ActiveMQ is exposed in
