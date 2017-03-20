@@ -1,7 +1,7 @@
 package com.gecko.message;
 
-import com.gecko.message.jms.JmsConnectionFactory;
-import com.gecko.message.jms.listener.JmsConsumerRegister;
+import com.gecko.message.complex.JmsConnectionFactory;
+import com.gecko.message.complex.listener.JmsConsumerRegister;
 import com.gecko.repository.Destinations;
 
 import javax.jms.Connection;
