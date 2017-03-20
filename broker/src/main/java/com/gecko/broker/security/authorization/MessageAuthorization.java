@@ -12,7 +12,7 @@ import javax.jms.Destination;
 
 /**
  * A simple message authorization policy implemenation requiring messages have a
- * AuthProperty token. The policy does not validate the value of the token, not
+ * TransactionId token. The policy does not validate the value of the token, not
  * that it is non null.
  *
  * To install the policy on a activemq broker,
@@ -23,7 +23,7 @@ import javax.jms.Destination;
  *               xmlns="http://www.springframework.org/schema/beans" />
  *      </messageAuthorizationPolicy>
  *   3. restart the broker
- *   4. ensure that each message contains the AuthProperty, otherwise it will not get delivered.
+ *   4. ensure that each message contains the TransactionId, otherwise it will not get delivered.
  *
  *
  * Created by hlieu on 03/19/17.
@@ -36,14 +36,15 @@ public class MessageAuthorization implements MessageAuthorizationPolicy {
       // LOG.info ("Remote Address: " + context.getConnection ().getRemoteAddress ());
       // LOG.info ("Message: " + (String)message.getProperty ("UnknownProperty"));
 
-      String AuthorizationProperty = "AuthProperty";
+      String TransactionId = "TransactionId";
       try {
-         String authToken = (String) message.getProperty (AuthorizationProperty);
+         String tIdToken = (String) message.getProperty (TransactionId);
          Destination destination = message.getDestination ();
          LOG.info ("Message: " + message.getMessage () );
-         LOG.info ("Destination: " + destination.toString ());
-         LOG.info ("Authorization Token: " + authToken);
-         if (authToken != null) {
+         //LOG.info ("Destination: " + destination.toString ());
+         LOG.info ("Transaction Id: " + tIdToken);
+
+         if (tIdToken != null) {
             LOG.info ("Permission to consume granted");
             return true;
          } else {

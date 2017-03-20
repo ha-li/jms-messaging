@@ -69,7 +69,7 @@ public class InMemoryRepository {
       brokerUrlMap.put ("fanout", "fanout:(static:(tcp://localhost:61616,tcp://localhost:61617))");
    }
 
-   private static final String DEFAULT_PROTOCOL = "ssl";
+   private static final String DEFAULT_PROTOCOL = "nio";
 
    public static String getBrokerUrl () {
       return getBrokerUrl (DEFAULT_PROTOCOL);

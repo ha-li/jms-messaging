@@ -31,11 +31,11 @@ public class SimpleProducer {
       Destination destination = session.createQueue("Queue.simple");
       MessageProducer producer = session.createProducer (destination);
 
-      for (int i = 0; i < 10; i++) {
+      for (int i = 0; i < 50; i++) {
 
          TextMessage msg = session.createTextMessage ("A simple message " + i);
-         msg.setStringProperty ("AuthProperty", UUID.randomUUID ().toString () );
-         System.out.println ("Sending a message with authorization!");
+         msg.setStringProperty ("TransactionId", UUID.randomUUID ().toString () );
+         System.out.println ("Sending a message with transaction id");
 
          producer.send (msg);
       }
