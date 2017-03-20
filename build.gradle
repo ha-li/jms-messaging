@@ -39,5 +39,5 @@ task wrapper (type: Wrapper) {
 
 task copyAmqConf (type: Copy) {
    from '/Users/hlieu/ActiveMQ/amq-broker-1/conf/activemq.xml'
-   into 'resource'
+   into 'resource/conf'
 }
