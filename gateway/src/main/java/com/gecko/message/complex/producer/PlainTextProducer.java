@@ -1,6 +1,6 @@
 package com.gecko.message.complex.producer;
 
-import com.gecko.message.complex.AbstractSessionProvider;
+import com.gecko.message.complex.provider.AbstractSessionProvider;
 
 import javax.jms.Connection;
 import javax.jms.Destination;

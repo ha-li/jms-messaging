@@ -1,6 +1,6 @@
-package com.gecko.message;
+package com.gecko.message.complex;
 
-import com.gecko.message.complex.JmsConnectionFactory;
+import com.gecko.message.complex.provider.JmsConnectionFactory;
 import com.gecko.message.complex.producer.JmsProducer;
 import com.gecko.message.complex.producer.PlainTextProducer;
 import com.gecko.repository.Destinations;

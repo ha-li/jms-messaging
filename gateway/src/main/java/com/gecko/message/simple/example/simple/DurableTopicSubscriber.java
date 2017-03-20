@@ -24,7 +24,7 @@ public class DurableTopicSubscriber {
 
       // a durable subscriber to a topic and
       // transportConnector configured according to nioConnection string
-      // you should see a complex message created in "Queue.simple"
+      // you should see a message created in "Queue.simple"
       // in the admin console
 
       String nioConnection = InMemoryRepository.getBrokerUrl("nio");

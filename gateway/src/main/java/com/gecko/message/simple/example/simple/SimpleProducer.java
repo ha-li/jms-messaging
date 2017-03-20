@@ -20,7 +20,7 @@ public class SimpleProducer {
 
       // run this with a non-embedded active mq broker up and
       // transportConnector configured according to nioConnection string
-      // you should see a complex message created in "Queue.simple"
+      // you should see a message created in "Queue.simple"
       // in the admin console
 
       String nioConnection = InMemoryRepository.getBrokerUrl("nio");

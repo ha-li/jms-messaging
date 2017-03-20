@@ -10,9 +10,9 @@ import java.util.Map;
  * defined in your executable. You must have created these public and private keys,
  * see ActiveMQ in Action, ch 3/4.
  *
- *  -Djavax.net.ssl.keyStore=/Users/hlieu/Security/KeyStores/complex.client.ks
+ *  -Djavax.net.ssl.keyStore=/Users/hlieu/Security/KeyStores/jms.client.ks
  *  -Djavax.net.ssl.keyStorePassword=jms123
- *  -Djavax.net.ssl.trustStore=/Users/hlieu/Security/KeyStores/complex.client.ts
+ *  -Djavax.net.ssl.trustStore=/Users/hlieu/Security/KeyStores/jms.client.ts
  *
  */
 public class InMemoryRepository {
@@ -37,7 +37,7 @@ public class InMemoryRepository {
       //ssl
       brokerUrlMap.put ("ssl", "ssl://localhost:61618?trace=true");
 
-      // using an embedded broker - don't need to start up complex broker separately
+      // using an embedded broker - don't need to start up jms broker separately
       // the embed broker can listen to other clients using nio on 61618
       // see embedded brokers in ActiveMq in Action (ch 4)
       // embedded brokers are configured with vm:broker:(...)

@@ -1,4 +1,4 @@
-package com.gecko.message.complex;
+package com.gecko.message.complex.provider;
 
 import javax.jms.Connection;
 import javax.jms.JMSException;

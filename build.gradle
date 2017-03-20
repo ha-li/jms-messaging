@@ -7,7 +7,7 @@ allprojects {
               name   : "$project.name",
               version: '0.1'
       ]
-      //artifactBaseName = 'complex-messaging'
+      //artifactBaseName = 'jms-messaging'
    }
 }
 

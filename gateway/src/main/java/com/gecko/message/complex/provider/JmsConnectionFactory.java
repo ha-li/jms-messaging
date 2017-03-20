@@ -1,4 +1,4 @@
-package com.gecko.message.complex;
+package com.gecko.message.complex.provider;
 
 import com.gecko.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;
