@@ -1,0 +1,15 @@
+description='Broker specific stuff'
+
+repositories {
+   mavenCentral ()
+}
+
+dependencies {
+   compile 'org.apache.activemq:activemq-all:5.14.3'
+   testCompile 'junit:junit:4.12'
+}
+
+task deployAuthorization (type: Copy) {
+   from "$projectDir/build/libs/broker.jar"
+   into "/Users/hlieu/ActiveMQ/amq-broker-1/lib/"
+}

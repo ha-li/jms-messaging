@@ -9,6 +9,7 @@ import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+import java.util.UUID;
 
 /**
  * Created by hlieu on 03/3/17.
@@ -31,9 +32,11 @@ public class SimpleProducer {
       MessageProducer producer = session.createProducer (destination);
 
       for (int i = 0; i < 10; i++) {
-         TextMessage msg = session.createTextMessage ("A simple message " + i);
 
-         System.out.println ("Sending a message");
+         TextMessage msg = session.createTextMessage ("A simple message " + i);
+         msg.setStringProperty ("AuthProperty", UUID.randomUUID ().toString () );
+         System.out.println ("Sending a message with authorization!");
+
          producer.send (msg);
       }
       producer.close ();
