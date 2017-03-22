@@ -112,6 +112,21 @@
              that defines the built in jaas plugins. 
            -->
            <jaasAuthenticationPlugin configuration="activemq" />
+
+           <!-- 
+              HL 
+              A custom built plugin for activemq that does validation of ip address. 
+              Clearly ActiveMQ has support for BrokerPlugin implementations such as this class.
+              This plugin class will then instantiate another class that does the desired custom behavior.
+           -->
+           <bean xmlns="http://www.springframework.org/schema/beans" id="ipAuthenticationPlugin"
+                 class="com.gecko.broker.security.authentication.connection.IpAddressAuthenticationPlugin">
+              <property name="allowedIpAddresses">
+                  <list>
+                       <value>127.0.0.1</value>
+                  </list>
+              </property>
+           </bean>
         </plugins>
 
         <!-- 

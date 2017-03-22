@@ -11,20 +11,20 @@ import org.apache.commons.logging.LogFactory;
 import javax.jms.Destination;
 
 /**
- * A simple message authorization policy implemenation requiring messages have a
- * TransactionId token. The policy does not validate the value of the token, not
+ * A simple message authorization policy implementation requiring messages have a
+ * TransactionId token. The policy does not validate the value of the token, just
  * that it is non null.
  *
  * To install the policy on a activemq broker,
  *   1. compile and jar and copy to $ACTIVEMQ_HOME/lib
- *   2. in $ACTIVEMQ_HOME/conf/activemq add the following to the broker element
+ *   2. in $ACTIVEMQ_HOME/conf/activemq.xml add the following to the broker element
  *      <messageAuthorizationPolicy>
- *         <bean class="...this bean..."
+ *         <bean class="com.gecko.broker.security.authorization.MessageAuthorization"
  *               xmlns="http://www.springframework.org/schema/beans" />
  *      </messageAuthorizationPolicy>
  *   3. restart the broker
  *   4. ensure that each message contains the TransactionId, otherwise it will not get delivered.
- *
+ *   5. tail the $ACTIVEMQ_HOME/data/*.log to see the logs
  *
  * Created by hlieu on 03/19/17.
  */
