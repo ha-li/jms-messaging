@@ -17,27 +17,27 @@ import java.util.UUID;
  * Created by hlieu on 03/22/17.
  */
 public class MessageSender {
+   private Session session = null;
+   private Destination replyToDestination;
+   private MessageProducer producer;
+   private Connection connection = null;
 
-   public static void getReplies (Session session, Destination destination) throws JMSException {
-      MessageConsumer consumer = session.createConsumer (destination);
-
-      for (int i = 0; i < 1; i++) {
-         Message reply = consumer.receive ();
-         TextMessage txtMessage = (TextMessage) reply;
-         System.out.println (txtMessage.getText ());
-      }
-   }
-
-   public static void main (String[] args) throws JMSException {
+   public void start () throws JMSException {
       String nioConnection = InMemoryRepository.getBrokerUrl("nio");
       ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(nioConnection);
-      Connection connection = connectionFactory.createConnection ("admin", "admin");
+      connection = connectionFactory.createConnection ("admin", "admin");
       connection.start ();
-      Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+      session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
       Destination destination = session.createQueue("Queue.request");
-      Destination replyToDestination = session.createTemporaryQueue ();
-      MessageProducer producer = session.createProducer (destination);
+      producer = session.createProducer (destination);
 
+      replyToDestination = session.createQueue ("Queue.reply");
+
+      MessageConsumer consumer = session.createConsumer(replyToDestination);
+      consumer.setMessageListener (new ReplyConsumer ());
+   }
+
+   public void sendRequests () throws JMSException {
       for (int i = 0; i < 1; i++) {
 
          TextMessage msg = session.createTextMessage ("Can you reply to me regarding message " + i);
@@ -50,10 +50,20 @@ public class MessageSender {
          producer.send (msg);
       }
 
-      getReplies (session, replyToDestination);
+   }
+
+   public void close () throws JMSException{
       producer.close ();
       session.close ();
       connection.close ();
+   }
 
+   public static void main (String[] args) throws Exception {
+
+      MessageSender sender = new MessageSender();
+      sender.start ();
+      sender.sendRequests ();
+      Thread.sleep (30000);
+      sender.close ();
    }
 }

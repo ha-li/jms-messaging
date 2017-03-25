@@ -7,34 +7,19 @@ import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.JMSException;
-import javax.jms.Message;
 import javax.jms.MessageConsumer;
-import javax.jms.MessageProducer;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 
 /**
  * Created by hlieu on 03/22/17.
  */
 public class ReplyingConsumer  {
 
-   public static void replyTo (Session session, Message msg) throws JMSException {
-      TextMessage txtMsg = (TextMessage) msg;
-      String correlationId = txtMsg.getJMSCorrelationID ();
-      Destination destination = txtMsg.getJMSReplyTo ();
-      System.out.println (txtMsg.getText ());
-      Destination replyDestination = session.createQueue(destination.toString ());
+   private Connection connection = null;
+   private Session session = null;
+   private Destination destination = null;
 
-      MessageProducer replier = session.createProducer (replyDestination);
-      TextMessage txtMessage = session.createTextMessage ( "Got your message");
-      txtMessage.setJMSCorrelationID (correlationId);
-      txtMessage.setStringProperty ("TransactionId", "iajsdf");
-      replier.send (txtMessage);
-   }
-
-   public static void main (String[] args) throws JMSException {
-      Connection connection = null;
-      Session session = null;
+   public void start () throws JMSException {
       try {
          String brokerUrl = InMemoryRepository.getBrokerUrl ("tcp");
          ConnectionFactory factory = new ActiveMQConnectionFactory (brokerUrl);
@@ -42,22 +27,30 @@ public class ReplyingConsumer  {
          connection = factory.createConnection ("admin", "admin");
          session = connection.createSession (false, Session.AUTO_ACKNOWLEDGE);
 
-         Destination destination = session.createQueue ("Queue.request");
+         destination = session.createQueue ("Queue.request");
+
          MessageConsumer consumer = session.createConsumer (destination);
 
          connection.start ();
-
-         System.out.println ("listening for requests");
-         for (int i = 0; i < 1; i++) {
-            Message message = consumer.receive ();
-            TextMessage txtMsg = (TextMessage) message;
-            String txt = txtMsg.getText ();
-            System.out.println (txt);
-            replyTo (session, message);
-         }
-      } finally {
-         session.close ();
-         connection.close ();
+         consumer.setMessageListener (new ReplySender (session));
+      } catch (Exception e) {
+         e.printStackTrace ();
       }
+   }
+
+
+   public void stop () throws JMSException{
+      session.close ();
+      connection.close ();
+   }
+
+
+   public static void main (String[] args) throws Exception {
+      ReplyingConsumer replier = new ReplyingConsumer ();
+      replier.start ();
+
+      Thread.sleep (10000);
+
+      replier.stop ();
    }
 }

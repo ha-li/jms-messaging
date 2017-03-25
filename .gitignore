@@ -2,3 +2,4 @@ build/
 .gradle/
 .idea/
 activemq-data/
+amq-in-action-example-src/
