@@ -38,8 +38,6 @@ public class ReplySender implements MessageListener {
 
          MessageProducer producer = session.createProducer (null);
          producer.setDeliveryMode (DeliveryMode.NON_PERSISTENT);
-         Destination tempDestination = request.getJMSReplyTo ();
-         //session.createTemporaryQueue ();
          producer.send (request.getJMSReplyTo (), response);
       } catch (Exception e) {
          e.printStackTrace ();
