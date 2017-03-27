@@ -6,7 +6,6 @@ import org.apache.activemq.broker.region.ConnectionStatistics;
 import org.apache.activemq.command.Command;
 import org.apache.activemq.command.ConnectionControl;
 import org.apache.activemq.command.Response;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
 
@@ -29,23 +28,23 @@ public class MockConnection implements Connection {
    public void stop () {}
 
    public Connector getConnector () {
-      throw new NotImplementedException ();
+      throw new RuntimeException ("Not Implemented Yet");
    }
 
    public void dispatchSync (Command message) {
-      throw new NotImplementedException ();
+      throw new RuntimeException ("Not Implemented Yet");
    }
 
    public void dispatchAsync (Command command) {
-      throw new NotImplementedException ();
+      throw new RuntimeException ("Not Implemented Yet");
    }
 
    public Response service (Command command) {
-      throw new NotImplementedException ();
+      throw new RuntimeException ("Not Implemented Yet");
    }
 
    public void serviceException (Throwable error) {
-      throw new NotImplementedException ();
+      throw new RuntimeException ("Not Implemented Yet");
    }
 
    public boolean isSlow () {

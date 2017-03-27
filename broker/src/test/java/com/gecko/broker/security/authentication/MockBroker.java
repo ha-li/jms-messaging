@@ -1,6 +1,5 @@
 package com.gecko.broker.security.authentication;
 
-import org.apache.activemq.broker.Broker;
 import org.apache.activemq.broker.ConnectionContext;
 import org.apache.activemq.broker.EmptyBroker;
 
@@ -9,7 +8,7 @@ import org.apache.activemq.broker.EmptyBroker;
  */
 public class MockBroker extends EmptyBroker {
 
-   @Override
+   //@Override
    public ConnectionContext getAdminConnectionContext () {
       return new ConnectionContext ();
    }
