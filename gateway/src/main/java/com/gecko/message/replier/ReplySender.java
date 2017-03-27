@@ -1,8 +1,6 @@
 package com.gecko.message.replier;
 
 import javax.jms.DeliveryMode;
-import javax.jms.Destination;
-import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
@@ -37,7 +35,7 @@ public class ReplySender implements MessageListener {
          response.setJMSCorrelationID (correlationId);
 
          MessageProducer producer = session.createProducer (null);
-         producer.setDeliveryMode (DeliveryMode.NON_PERSISTENT);
+         //producer.setDeliveryMode (DeliveryMode.NON_PERSISTENT);
          producer.send (request.getJMSReplyTo (), response);
       } catch (Exception e) {
          e.printStackTrace ();
