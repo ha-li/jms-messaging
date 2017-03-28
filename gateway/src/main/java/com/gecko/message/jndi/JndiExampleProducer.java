@@ -1,8 +1,5 @@
 package com.gecko.message.jndi;
 
-import com.gecko.message.jndi.service.MessageSenderService;
-import org.apache.activemq.ActiveMQConnectionFactory;
-
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.MessageProducer;
@@ -24,8 +21,6 @@ public class JndiExampleProducer {
       Context ctx = new InitialContext ();
       ConnectionFactory factory = (ConnectionFactory) ctx.lookup ("connectionFactory");
       Queue qDest = (Queue)ctx.lookup ("requestQueue");
-
-      //MessageSenderService service = new MessageSenderService (factory, qDest);
 
       Connection connection = factory.createConnection ("admin", "admin");
       connection.start();
