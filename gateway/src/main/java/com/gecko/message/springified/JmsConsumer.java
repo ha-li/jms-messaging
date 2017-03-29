@@ -28,7 +28,7 @@ public class JmsConsumer {
       Connection connection = connectionFactory.createConnection ("admin", "admin");
       connection.start ();
       Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-      Destination destination = session.createQueue("Queue.request");
+      Destination destination = session.createQueue("Gecko.global.dev.test.Queue");
       MessageConsumer consumer = session.createConsumer (destination);
 
       System.out.println ("Waiting for messages");

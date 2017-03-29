@@ -2,7 +2,10 @@ package com.gecko.message.springified.repository;
 
 import com.gecko.message.springified.producer.AbstractProducer;
 import com.gecko.message.springified.producer.Producer;
+import com.gecko.repository.InMemoryRepository;
+import org.apache.activemq.ActiveMQConnectionFactory;
 
+import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
@@ -17,9 +20,17 @@ public class ProducerRepository {
 
    private static Map<String, ProducerRecord> producerRepository = new HashMap<String, ProducerRecord> ();
 
+   private static Map<String, ConnectionFactory> connectionMap = new HashMap<String, ConnectionFactory> ();
+
    private static String ENVIRONMENT = "dev";
 
    static {
+      // save the connection factory, this could be put in the db
+      // and handle like the producers, ie a connection db
+      String nioConnection = InMemoryRepository.getBrokerUrl("nio");
+      ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("admin", "admin", nioConnection);
+      connectionMap.put ("connectionKey", connectionFactory);
+
       // fake a database, repository is the db
       // TODO: replace with hibernate
       producerRepository.put (
@@ -29,7 +40,7 @@ public class ProducerRepository {
                                   "Gecko.global.{env}.test.Queue",
                                   "org.apache.activemq.command.ActiveMQQueue",
                                   "com.gecko.message.springified.producer.DefaultProducer",
-                                  "connection") );
+                                  "connectionKey") );
    }
 
    public static AbstractProducer findProducer(String accessKey) throws Exception {
@@ -39,9 +50,10 @@ public class ProducerRepository {
 
       try {
 
-         Constructor<?> constructor = Class.forName (producerRecord.getProducerClass ()).getConstructor (Destination.class, String.class);
+         Constructor<?> constructor = Class.forName (producerRecord.getProducerClass ()).getConstructor (ConnectionFactory.class, Destination.class, String.class);
          Destination destination = createDestination (producerRecord.getDestination (), producerRecord.getDestinationClass () );
-         producer = (AbstractProducer) constructor.newInstance ( destination, producerRecord.getClientId () );
+         ConnectionFactory factory = connectionMap.get(producerRecord.getConnectionFactoryKey ());
+         producer = (AbstractProducer) constructor.newInstance ( factory, destination, producerRecord.getClientId () );
          producerMap.put (accessKey, producer);
 
       } catch (Exception e) {

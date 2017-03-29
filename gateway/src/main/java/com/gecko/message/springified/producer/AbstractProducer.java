@@ -30,5 +30,5 @@ public abstract class AbstractProducer implements Producer{
       this.applicationId = applicationId;
    }
 
-   public abstract void send();
+   public abstract void send(final String message);
 }
