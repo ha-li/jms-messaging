@@ -1,4 +1,4 @@
-package com.gecko.message.simple.example.peer;
+package com.gecko.message.examples.peer;
 
 import com.gecko.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;

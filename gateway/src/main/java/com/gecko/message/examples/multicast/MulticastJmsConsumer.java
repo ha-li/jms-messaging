@@ -1,4 +1,4 @@
-package com.gecko.message.simple.example.multicast;
+package com.gecko.message.examples.multicast;
 
 import com.gecko.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;

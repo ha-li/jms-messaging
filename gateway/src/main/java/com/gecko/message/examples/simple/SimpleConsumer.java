@@ -1,4 +1,4 @@
-package com.gecko.message.simple.example.embedded;
+package com.gecko.message.examples.simple;
 
 import com.gecko.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -15,17 +15,17 @@ import javax.jms.TextMessage;
 /**
  * Created by hlieu on 03/3/17.
  */
-public class EmbeddedJmsConsumer {
+public class SimpleConsumer {
 
    public static void main (String[] args) throws JMSException, InterruptedException {
 
-      // consumer with an embedded active mq broker.
-      // producer can use transportConnector configured according to nioConnection string
-      // since this is an embedded broker, the admin console will not reflect this broker
-      // to verify this is an embedded broker, do not start up activemq
+      // run this with a non-embedded active mq broker up and
+      // transportConnector configured according to nioConnection string
+      // you should see a message created in "Queue.simple"
+      // in the admin console
 
-      String embeddedBroker = InMemoryRepository.getBrokerUrl("vm");
-      ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(embeddedBroker);
+      String nioConnection = InMemoryRepository.getBrokerUrl("nio");
+      ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(nioConnection);
       Connection connection = connectionFactory.createConnection ("admin", "admin");
       connection.start ();
       Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);

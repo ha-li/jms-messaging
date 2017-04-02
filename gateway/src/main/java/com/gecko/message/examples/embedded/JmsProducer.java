@@ -1,4 +1,5 @@
-package com.gecko.message.simple.example.failover;
+package com.gecko.message.examples.embedded;
+
 
 import com.gecko.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -13,24 +14,23 @@ import javax.jms.TextMessage;
 /**
  * Created by hlieu on 03/3/17.
  */
-public class FailoverProducer {
+public class JmsProducer {
 
    public static void main (String[] args) throws JMSException {
 
-      // An example of a failover url configuration.
-      // 2 brokers are configured and when one dies, the client automatically
-      // switches over to the other broker and the client needs to do nothing.
+      // this producer connects with the embedded active mq broker via
+      // transportConnector configured according to nioConnection string
 
-      String nioConnection = InMemoryRepository.getBrokerUrl("failover");
-      ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(nioConnection);
+      String producerBrokerUrl = InMemoryRepository.getBrokerUrl("vm_producer");
+      ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(producerBrokerUrl);
       Connection connection = connectionFactory.createConnection ("admin", "admin");
       connection.start ();
       Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-      Destination destination = session.createQueue("Queue.failover");
+      Destination destination = session.createQueue("Queue.simple");
       MessageProducer producer = session.createProducer (destination);
-      TextMessage msg = session.createTextMessage("A simple message");
+      TextMessage msg = session.createTextMessage("A simple message for an embedded broker");
 
-      System.out.println ("Sending a message");
+      System.out.println ("Sending a message to an embedded broker");
       producer.send (msg);
       producer.close ();
       session.close ();

@@ -1,4 +1,4 @@
-package com.gecko.message.simple.example.simple;
+package com.gecko.message.examples.failover;
 
 import com.gecko.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -10,34 +10,25 @@ import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
-import javax.jms.Topic;
-import javax.jms.TopicConnection;
-import javax.jms.TopicSession;
-import javax.jms.TopicSubscriber;
 
 /**
  * Created by hlieu on 03/3/17.
  */
-public class DurableTopicSubscriber {
+public class FailoverConsumer {
 
    public static void main (String[] args) throws JMSException, InterruptedException {
 
-      // a durable subscriber to a topic and
-      // transportConnector configured according to nioConnection string
-      // you should see a message created in "Queue.simple"
-      // in the admin console
+      // An example of a failover url configuration.
+      // 2 brokers are configured and when one dies, the client automatically
+      // switches over to the other broker and the client needs to do nothing.
 
-      String nioConnection = InMemoryRepository.getBrokerUrl("nio");
+      String nioConnection = InMemoryRepository.getBrokerUrl("failover");
       ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(nioConnection);
       Connection connection = connectionFactory.createConnection ("admin", "admin");
-
-      // this is how the client id gets set, is required for a durable consumer
-      connection.setClientID ("123");
       connection.start ();
-
-      Session session = connection.createSession(false, TopicSession.AUTO_ACKNOWLEDGE);
-      Topic destination = session.createTopic("Topic.simple");
-      TopicSubscriber consumer = session.createDurableSubscriber (destination, "durableSub");
+      Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+      Destination destination = session.createQueue("Queue.failover");
+      MessageConsumer consumer = session.createConsumer (destination);
 
       System.out.println ("Waiting for messages");
       while (true) {

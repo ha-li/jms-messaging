@@ -1,5 +1,4 @@
-package com.gecko.message.simple.example.embedded;
-
+package com.gecko.message.examples.multicast;
 
 import com.gecko.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -14,23 +13,23 @@ import javax.jms.TextMessage;
 /**
  * Created by hlieu on 03/3/17.
  */
-public class JmsProducer {
+public class MulticastJmsProducer {
 
    public static void main (String[] args) throws JMSException {
 
-      // this producer connects with the embedded active mq broker via
-      // transportConnector configured according to nioConnection string
+      // run a broker using an autodiscover multicast protocol, this producer
+      // will be able to find it and publish to it
 
-      String producerBrokerUrl = InMemoryRepository.getBrokerUrl("vm_producer");
-      ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(producerBrokerUrl);
+      String multicast = InMemoryRepository.getBrokerUrl("multicast");
+      ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(multicast);
       Connection connection = connectionFactory.createConnection ("admin", "admin");
       connection.start ();
       Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
       Destination destination = session.createQueue("Queue.simple");
       MessageProducer producer = session.createProducer (destination);
-      TextMessage msg = session.createTextMessage("A simple message for an embedded broker");
+      TextMessage msg = session.createTextMessage("A simple message");
 
-      System.out.println ("Sending a message to an embedded broker");
+      System.out.println ("Sending a message");
       producer.send (msg);
       producer.close ();
       session.close ();

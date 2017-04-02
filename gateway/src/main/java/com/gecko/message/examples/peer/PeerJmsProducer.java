@@ -1,4 +1,4 @@
-package com.gecko.message.simple.example.multicast;
+package com.gecko.message.examples.peer;
 
 import com.gecko.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -13,26 +13,35 @@ import javax.jms.TextMessage;
 /**
  * Created by hlieu on 03/3/17.
  */
-public class MulticastJmsProducer {
+public class PeerJmsProducer {
 
-   public static void main (String[] args) throws JMSException {
+   public static void main (String[] args) throws Exception {
 
-      // run a broker using an autodiscover multicast protocol, this producer
-      // will be able to find it and publish to it
+      // an example of a network of embedded brokers. this publisher
+      // will publish to its embedded broker, which will forward the
+      // message to it's peer (the consumers embedded broker)
 
-      String multicast = InMemoryRepository.getBrokerUrl("multicast");
-      ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(multicast);
+      String peer = InMemoryRepository.getBrokerUrl("peer");
+      ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(peer);
       Connection connection = connectionFactory.createConnection ("admin", "admin");
       connection.start ();
       Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
       Destination destination = session.createQueue("Queue.simple");
       MessageProducer producer = session.createProducer (destination);
-      TextMessage msg = session.createTextMessage("A simple message");
 
       System.out.println ("Sending a message");
-      producer.send (msg);
+
+      for (int i = 0; i < 1000; i++) {
+         System.out.println ("Sending message " + i);
+         TextMessage msg = session.createTextMessage("A simple message " + i);
+
+         producer.send (msg);
+         // producer.close ();
+      }
       producer.close ();
       session.close ();
       connection.close ();
+      Thread.sleep(10000);
+      System.exit(1);
    }
 }

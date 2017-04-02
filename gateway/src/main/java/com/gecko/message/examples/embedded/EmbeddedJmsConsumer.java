@@ -1,4 +1,4 @@
-package com.gecko.message.simple.example.failover;
+package com.gecko.message.examples.embedded;
 
 import com.gecko.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -8,26 +8,28 @@ import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
+import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
 /**
  * Created by hlieu on 03/3/17.
  */
-public class FailoverConsumer {
+public class EmbeddedJmsConsumer {
 
    public static void main (String[] args) throws JMSException, InterruptedException {
 
-      // An example of a failover url configuration.
-      // 2 brokers are configured and when one dies, the client automatically
-      // switches over to the other broker and the client needs to do nothing.
+      // consumer with an embedded active mq broker.
+      // producer can use transportConnector configured according to nioConnection string
+      // since this is an embedded broker, the admin console will not reflect this broker
+      // to verify this is an embedded broker, do not start up activemq
 
-      String nioConnection = InMemoryRepository.getBrokerUrl("failover");
-      ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(nioConnection);
+      String embeddedBroker = InMemoryRepository.getBrokerUrl("vm");
+      ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(embeddedBroker);
       Connection connection = connectionFactory.createConnection ("admin", "admin");
       connection.start ();
       Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-      Destination destination = session.createQueue("Queue.failover");
+      Destination destination = session.createQueue("Queue.simple");
       MessageConsumer consumer = session.createConsumer (destination);
 
       System.out.println ("Waiting for messages");
