@@ -3,7 +3,7 @@ package com.gecko.message.complex;
 import com.gecko.message.complex.producer.SecureProducer;
 import com.gecko.message.complex.producer.SecureTextMessageProducer;
 import com.gecko.message.complex.provider.JmsConnectionFactory;
-import com.gecko.repository.Destinations;
+import com.gecko.message.repository.Destinations;
 
 import javax.jms.Connection;
 import javax.jms.JMSException;

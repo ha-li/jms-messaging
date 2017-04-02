@@ -1,4 +1,4 @@
-package com.gecko.repository;
+package com.gecko.message.repository;
 
 /**
  * Created by hlieu on 03/1/17.

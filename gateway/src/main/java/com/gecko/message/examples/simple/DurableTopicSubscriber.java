@@ -1,17 +1,14 @@
 package com.gecko.message.examples.simple;
 
-import com.gecko.repository.InMemoryRepository;
+import com.gecko.message.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.Connection;
-import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.MessageConsumer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
-import javax.jms.TopicConnection;
 import javax.jms.TopicSession;
 import javax.jms.TopicSubscriber;
 

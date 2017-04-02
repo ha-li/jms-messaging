@@ -1,6 +1,6 @@
 package com.gecko.message.examples.fanout;
 
-import com.gecko.repository.InMemoryRepository;
+import com.gecko.message.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.Connection;

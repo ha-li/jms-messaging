@@ -1,11 +1,10 @@
 package com.gecko.message.examples.peer;
 
-import com.gecko.repository.InMemoryRepository;
+import com.gecko.message.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.Connection;
 import javax.jms.Destination;
-import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;

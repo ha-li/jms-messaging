@@ -1,7 +1,7 @@
 package com.gecko.message.springified;
 
 import com.gecko.message.springified.consumer.Consumer;
-import com.gecko.repository.InMemoryRepository;
+import com.gecko.message.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.apache.activemq.pool.PooledConnectionFactory;
