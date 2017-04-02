@@ -34,7 +34,7 @@ public class SpringifiedProducer {
       for (int i = 0; i < times.length; i++) {
 
          timer.restart ();
-         for (int j = 0; j < 1000; j++) {
+         for (int j = 0; j < 10; j++) {
             System.out.println ("Sending a message with transaction id");
             ProducerRepository.findProducer ("default_producer").send ("A test message " + i);
          }

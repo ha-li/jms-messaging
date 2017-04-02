@@ -1,43 +1,43 @@
 package com.gecko.message.springified;
 
+import com.gecko.message.springified.consumer.Consumer;
 import com.gecko.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.command.ActiveMQQueue;
+import org.apache.activemq.pool.PooledConnectionFactory;
+import org.springframework.jms.listener.DefaultMessageListenerContainer;
 
-import javax.jms.Connection;
 import javax.jms.Destination;
 import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.Session;
-import javax.jms.TextMessage;
+import javax.jms.MessageListener;
+import java.io.IOException;
 
 /**
  * Created by hlieu on 03/3/17.
  */
 public class JmsConsumer {
 
-   public static void main (String[] args) throws JMSException, InterruptedException {
-
-      // run this with a non-embedded active mq broker up and
-      // transportConnector configured according to nioConnection string
-      // you should see a message created in "Queue.simple"
-      // in the admin console
+   public static void main (String[] args) throws JMSException, InterruptedException, IOException {
 
       String nioConnection = InMemoryRepository.getBrokerUrl("nio");
-      ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(nioConnection);
-      Connection connection = connectionFactory.createConnection ("admin", "admin");
-      connection.start ();
-      Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-      Destination destination = session.createQueue("Gecko.global.dev.test.Queue");
-      MessageConsumer consumer = session.createConsumer (destination);
+      ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("admin", "admin", nioConnection);
+      PooledConnectionFactory pooledConnectionFactory = new PooledConnectionFactory (connectionFactory);
 
+      DefaultMessageListenerContainer messageListenerContainer = new DefaultMessageListenerContainer ();
+      messageListenerContainer.setConnectionFactory (pooledConnectionFactory);
+
+      Destination destination = new ActiveMQQueue ("Gecko.global.dev.test.Queue");
+      messageListenerContainer.setDestination (destination);
+
+      MessageListener listener = new Consumer ();
+      messageListenerContainer.setMessageListener(listener);
+      messageListenerContainer.initialize ();
+      messageListenerContainer.start();
       System.out.println ("Waiting for messages");
-      while (true) {
-         Message msg = consumer.receive ();
-         TextMessage txtMsg = (TextMessage) msg;
-         String content = txtMsg.getText ();
-         System.out.println (content);
-         Thread.sleep (10);
-      }
+
+      System.in.read();
+
+      messageListenerContainer.stop();
+      System.exit(1);
    }
 }
