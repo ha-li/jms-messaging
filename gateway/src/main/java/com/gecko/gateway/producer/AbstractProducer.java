@@ -1,4 +1,4 @@
-package com.gecko.message.springified.producer;
+package com.gecko.gateway.producer;
 
 import javax.jms.Destination;
 

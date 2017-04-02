@@ -1,6 +1,6 @@
-package com.gecko.message.springified;
+package com.gecko.gateway;
 
-import com.gecko.message.springified.consumer.Consumer;
+import com.gecko.gateway.consumer.Consumer;
 import com.gecko.message.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;

@@ -1,9 +1,7 @@
-package com.gecko.message.springified;
+package com.gecko.gateway;
 
-import com.gecko.message.springified.repository.ProducerRepository;
+import com.gecko.gateway.repository.ProducerRepository;
 import org.apache.activemq.util.StopWatch;
-
-import java.util.Timer;
 
 /**
  *

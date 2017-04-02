@@ -1,7 +1,7 @@
-package com.gecko.message.springified.repository;
+package com.gecko.gateway.repository;
 
-import com.gecko.message.springified.producer.AbstractProducer;
-import com.gecko.message.springified.producer.Producer;
+import com.gecko.gateway.producer.AbstractProducer;
+import com.gecko.gateway.producer.Producer;
 import com.gecko.message.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.pool.PooledConnectionFactory;
@@ -43,7 +43,7 @@ public class ProducerRepository {
                                   "fictional-client-id",
                                   "Gecko.global.{env}.test.Queue",
                                   "org.apache.activemq.command.ActiveMQQueue",
-                                  "com.gecko.message.springified.producer.DefaultProducer",
+                                  "com.gecko.gateway.producer.DefaultProducer",
                                   "pooledConnectionKey") );
    }
 

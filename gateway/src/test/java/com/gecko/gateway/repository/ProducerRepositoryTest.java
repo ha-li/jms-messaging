@@ -1,6 +1,6 @@
-package com.gecko.message.springified.repository;
+package com.gecko.gateway.repository;
 
-import com.gecko.message.springified.producer.AbstractProducer;
+import com.gecko.gateway.producer.AbstractProducer;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.junit.Assert;
 import org.junit.Test;

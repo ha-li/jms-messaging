@@ -1,4 +1,4 @@
-package com.gecko.message.springified.consumer;
+package com.gecko.gateway.consumer;
 
 import javax.jms.JMSException;
 import javax.jms.Message;

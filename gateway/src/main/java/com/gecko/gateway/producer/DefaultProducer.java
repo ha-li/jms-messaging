@@ -1,6 +1,6 @@
-package com.gecko.message.springified.producer;
+package com.gecko.gateway.producer;
 
-import com.gecko.message.springified.service.MessageService;
+import com.gecko.gateway.service.MessageService;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 

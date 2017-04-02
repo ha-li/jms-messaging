@@ -1,4 +1,4 @@
-package com.gecko.message.springified.producer;
+package com.gecko.gateway.producer;
 
 /**
  * Created by hlieu on 03/28/17.

@@ -1,4 +1,4 @@
-package com.gecko.message.springified.repository;
+package com.gecko.gateway.repository;
 
 /**
  * Created by hlieu on 03/28/17.
