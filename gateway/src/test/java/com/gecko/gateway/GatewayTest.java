@@ -1,5 +1,6 @@
 package com.gecko.gateway;
 
+import com.gecko.gateway.producer.Producer;
 import org.apache.activemq.pool.PooledConnectionFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -17,6 +18,7 @@ public class GatewayTest {
    @BeforeClass
    public static void setUp () {
       Gateway.getInstance();
+      Gateway.getInstance().registerConnectionFactories ();
    }
 
    @Test
@@ -27,7 +29,7 @@ public class GatewayTest {
 
    @Test
    public void test_registerConnectionFactories () throws Exception {
-      Gateway.getInstance().registerConnectionFactories ();
+
       ConnectionFactory factory = Gateway.getInstance ().findConnectionFactory ("connection-factory");
       Assert.assertNotNull (factory);
    }
@@ -41,5 +43,22 @@ public class GatewayTest {
 
       ConnectionFactory factory = Gateway.getInstance ().findConnectionFactory ("connection-factory");
       Assert.assertTrue (factory instanceof PooledConnectionFactory);
+   }
+
+   @Test
+   public void test_registerProducers () {
+      Gateway.getInstance ().registerProducers ();
+      Producer producer = Gateway.getInstance ().findProducer ("default_producer");
+      Assert.assertNotNull(producer);
+   }
+
+   @Test
+   public void test_findProducer () throws Exception {
+      Field field = Gateway.class.getDeclaredField ("producerMap");
+      field.setAccessible (Boolean.TRUE);
+      field.set(Gateway.getInstance(), new HashMap<String, Producer> ());
+
+      Producer producer = Gateway.getInstance ().findProducer ("default_producer");
+      Assert.assertNotNull (producer);
    }
 }

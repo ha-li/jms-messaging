@@ -34,7 +34,7 @@ public class JmsSender {
          timer.restart ();
          for (int j = 0; j < 10; j++) {
             System.out.println ("Sending a message with transaction id");
-            ProducerRepository.findProducer ("default_producer").send ("A test message " + i);
+            Gateway.getInstance ().findProducer ("default_producer").send ("A test message " + i);
          }
          timer.stop();
          times[i] = timer.taken ();

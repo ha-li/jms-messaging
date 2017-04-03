@@ -1,11 +1,9 @@
 package com.gecko.gateway.repository;
 
-import com.gecko.gateway.producer.AbstractProducer;
-import org.apache.activemq.command.ActiveMQQueue;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.jms.Destination;
+import java.util.Collection;
 
 /**
  * Unit Testing of producer lookup.
@@ -14,17 +12,26 @@ import javax.jms.Destination;
 public class ProducerRepositoryTest {
 
    @Test
-   public void testProducerRepository_getProducer() throws Exception {
-      AbstractProducer defaultProducer = ProducerRepository.findProducer("default_producer");
+   public void test_getProducer() throws Exception {
+      ProducerRecord defaultProducer = ProducerRepository.findProducer("default_producer");
       Assert.assertNotNull(defaultProducer);
-      Destination destination = defaultProducer.getDestination ();
-      String application = defaultProducer.getApplicationId ();
-      Assert.assertEquals(((ActiveMQQueue)destination).getPhysicalName (), "Gecko.global.dev.test.Queue");
-      Assert.assertEquals(application, "fictional-client-id");
+      Assert.assertEquals ("default_producer", defaultProducer.getAccessKey ());
+      Assert.assertEquals ("fictional-client-id", defaultProducer.getClientId ());
+      Assert.assertEquals ("Gecko.global.{env}.test.Queue", defaultProducer.getDestination ());
+      Assert.assertEquals ("org.apache.activemq.command.ActiveMQQueue", defaultProducer.getDestinationClass ());
+      Assert.assertEquals ("com.gecko.gateway.producer.DefaultProducer", defaultProducer.getProducerClass ());
+      Assert.assertEquals ("connection-factory", defaultProducer.getConnectionFactoryKey ());
    }
 
-   @Test(expected = NullPointerException.class)
-   public void testProducerRepository_exception () throws Exception {
-      AbstractProducer producer = ProducerRepository.findProducer ("does-not-exist");
+   @Test
+   public void test_getNullProducer () throws Exception {
+      ProducerRecord producer = ProducerRepository.findProducer ("does-not-exist");
+      Assert.assertNull (producer);
+   }
+
+   @Test
+   public void test_allProducers () {
+      Collection<ProducerRecord> all = ProducerRepository.allProducers ();
+      Assert.assertEquals (1, all.size());
    }
 }
