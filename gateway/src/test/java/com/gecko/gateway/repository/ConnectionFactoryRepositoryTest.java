@@ -1,50 +1,29 @@
 package com.gecko.gateway.repository;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.jms.ConnectionFactory;
-import java.lang.reflect.Field;
-import java.util.HashMap;
+import java.util.Collection;
 
 /**
  * Created by hlieu on 04/2/17.
  */
 public class ConnectionFactoryRepositoryTest {
 
+
    @Test
-   public void test () throws Exception {
-      ConnectionFactoryRecord record = new ConnectionFactoryRecord(
-         "connection-factory",
-         "org.apache.activemq.ActiveMQConnectionFactory",
-         "admin",
-         "admin"
-      );
-      ConnectionFactoryRepository.registerConnectionFactory (record);
+   public void test_get () {
+      ConnectionFactoryRecord record = ConnectionFactoryRepository.get ("connection-factory");
+      Assert.assertNotNull(record);
+      Assert.assertEquals ("admin", record.getUser());
+      Assert.assertEquals ("admin", record.getPassword());
+      Assert.assertEquals ("org.apache.activemq.ActiveMQConnectionFactory", record.getConnectionClass ());
+      Assert.assertEquals ("connection-factory", record.getConnectionKey ());
    }
 
    @Test
-   public void test_registerConnections () throws Exception {
-      ConnectionFactoryRepository.registerConnectionFactories ();
-      ConnectionFactory factory = ConnectionFactoryRepository.findConnectionFactory ("connection-factory");
-      Assert.assertNotNull (factory);
-      Assert.assertTrue (factory instanceof ActiveMQConnectionFactory);
-
+   public void test_allConnections () {
+      Collection<ConnectionFactoryRecord> records = ConnectionFactoryRepository.allConnectionFactories ();
+      Assert.assertEquals(1, records.size ());
    }
-
-   @Test
-   public void test_findCOnnectionFactory () throws Exception {
-      // reflect to get the connectionMap
-      Field map = ConnectionFactoryRepository.class.getDeclaredField("connectionMap");
-      map.setAccessible (Boolean.TRUE);
-      // set it to new hash map ... basically delete any existing connectionfactories
-      map.set(null, new HashMap<String, ConnectionFactory> ());
-
-      // force execution of 1st if block
-      ConnectionFactory factory = ConnectionFactoryRepository.findConnectionFactory ("connection-factory");
-      Assert.assertNotNull (factory);
-      Assert.assertTrue (factory instanceof ActiveMQConnectionFactory);
-   }
-
 }
