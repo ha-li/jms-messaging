@@ -1,5 +1,6 @@
 package com.gecko.gateway.repository;
 
+import org.apache.activemq.ActiveMQConnectionFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -28,6 +29,8 @@ public class ConnectionFactoryRepositoryTest {
       ConnectionFactoryRepository.registerConnectionFactories ();
       ConnectionFactory factory = ConnectionFactoryRepository.findConnectionFactory ("connection-factory");
       Assert.assertNotNull (factory);
+      Assert.assertTrue (factory instanceof ActiveMQConnectionFactory);
+
    }
 
    @Test
@@ -41,6 +44,7 @@ public class ConnectionFactoryRepositoryTest {
       // force execution of 1st if block
       ConnectionFactory factory = ConnectionFactoryRepository.findConnectionFactory ("connection-factory");
       Assert.assertNotNull (factory);
+      Assert.assertTrue (factory instanceof ActiveMQConnectionFactory);
    }
 
 }

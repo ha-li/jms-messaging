@@ -3,6 +3,7 @@ package com.gecko.gateway.repository;
 import com.gecko.gateway.producer.AbstractProducer;
 import com.gecko.gateway.producer.Producer;
 import com.gecko.message.repository.InMemoryRepository;
+import com.thoughtworks.xstream.InitializationException;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.pool.PooledConnectionFactory;
 
@@ -28,11 +29,18 @@ public class ProducerRepository {
    static {
       // save the connection factory, this could be put in the db
       // and handle like the producers, ie a connection db
-      String nioConnection = InMemoryRepository.getBrokerUrl("nio");
-      ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("admin", "admin", nioConnection);
-      connectionMap.put ("connectionKey", connectionFactory);
+      //String nioConnection = InMemoryRepository.getBrokerUrl("nio");
+      ConnectionFactory connectionFactory = null;
+      try {
+         connectionFactory = ConnectionFactoryRepository.findConnectionFactory ("connection-factory");
+      } catch (Exception e) {
+         e.printStackTrace ();
+         throw new InitializationException ("Exception while creating connection factory", e);
+      }
+      //ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("admin", "admin", nioConnection);
+      //connectionMap.put ("connectionKey", connectionFactory);
 
-      PooledConnectionFactory pooledFactory = new PooledConnectionFactory(connectionFactory);
+      PooledConnectionFactory pooledFactory = new PooledConnectionFactory((ActiveMQConnectionFactory)connectionFactory);
       connectionMap.put("pooledConnectionKey", pooledFactory);
 
       // fake a database, repository is the db
