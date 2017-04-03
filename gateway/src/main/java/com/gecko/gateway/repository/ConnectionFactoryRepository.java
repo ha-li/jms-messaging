@@ -4,6 +4,7 @@ import com.gecko.message.repository.InMemoryRepository;
 
 import javax.jms.ConnectionFactory;
 import java.lang.reflect.Constructor;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,12 +28,11 @@ public class ConnectionFactoryRepository {
    public static ConnectionFactory findConnectionFactory (String connectionKey) throws Exception {
       ConnectionFactory factory = connectionMap.get (connectionKey);
       if (factory == null) {
-         String nioConnection = InMemoryRepository.getBrokerUrl ("nio");
-
-         ConnectionFactoryRecord factoryRecord = connectionRepository.get (connectionKey);
-         Constructor<?> constructor = Class.forName (factoryRecord.getConnectionClass ()).getConstructor (String.class, String.class, String.class);
-         factory = (ConnectionFactory) constructor.newInstance (factoryRecord.getUser (), factoryRecord.getPassword (), nioConnection);
-         connectionMap.put (factoryRecord.getConnectionKey (), factory);
+         ConnectionFactoryRecord factoryRecord = connectionRepository.get(connectionKey);
+         if (factoryRecord != null) {
+            registerConnectionFactory (factoryRecord);
+            factory = connectionMap.get (connectionKey);
+         }
       }
       return factory;
    }
@@ -43,8 +43,16 @@ public class ConnectionFactoryRepository {
       Constructor<?> constructor = Class.forName (factoryRecord.getConnectionClass ()).getConstructor (String.class, String.class, String.class);
       ConnectionFactory factory = (ConnectionFactory) constructor.newInstance (factoryRecord.getUser (), factoryRecord.getPassword (), nioConnection);
       connectionMap.put (factoryRecord.getConnectionKey (), factory);
-
    }
 
-
+   public static void registerConnectionFactories () {
+      Collection<ConnectionFactoryRecord> connections = connectionRepository.values ();
+      for (ConnectionFactoryRecord record : connections) {
+         try {
+            registerConnectionFactory (record);
+         } catch (Exception e) {
+            e.printStackTrace ();
+         }
+      }
+   }
 }
