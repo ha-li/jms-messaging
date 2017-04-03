@@ -1,6 +1,6 @@
 package com.gecko.gateway;
 
-import com.gecko.gateway.consumer.Consumer;
+import com.gecko.gateway.consumer.DefaultConsumer;
 import com.gecko.message.repository.InMemoryRepository;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
@@ -29,7 +29,7 @@ public class JmsConsumer {
       Destination destination = new ActiveMQQueue ("Gecko.global.dev.test.Queue");
       messageListenerContainer.setDestination (destination);
 
-      MessageListener listener = new Consumer ();
+      MessageListener listener = new DefaultConsumer ();
       messageListenerContainer.setMessageListener(listener);
       messageListenerContainer.initialize ();
       messageListenerContainer.start();

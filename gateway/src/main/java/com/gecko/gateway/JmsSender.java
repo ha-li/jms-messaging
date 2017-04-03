@@ -12,7 +12,7 @@ import org.apache.activemq.util.StopWatch;
  * To switch between pooled vs regular, change the connectionKey in ProducerRepository
  * Created by hlieu on 03/3/17.
  */
-public class SpringifiedProducer {
+public class JmsSender {
 
    public static void average (long[] times) {
       long totalTime = 0;

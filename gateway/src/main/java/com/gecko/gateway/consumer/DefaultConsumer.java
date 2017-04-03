@@ -8,7 +8,7 @@ import javax.jms.TextMessage;
 /**
  * Created by hlieu on 04/1/17.
  */
-public class Consumer implements MessageListener {
+public class DefaultConsumer implements MessageListener {
 
    public void onMessage(Message message) {
       try {
@@ -18,7 +18,7 @@ public class Consumer implements MessageListener {
             System.out.println ("transactionId: " + transactionId);
             System.out.println ("message: " + msg.getText ());
          } else {
-            System.out.println ("Consumer cannot handle this non-text messages");
+            System.out.println ("DefaultConsumer cannot handle this non-text messages");
          }
       } catch (JMSException jme) {
          jme.printStackTrace ();
