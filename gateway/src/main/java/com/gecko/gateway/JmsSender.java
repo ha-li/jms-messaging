@@ -29,6 +29,8 @@ public class JmsSender {
 
       StopWatch timer = new StopWatch ();
 
+      Gateway.getInstance ().start ();
+
       for (int i = 0; i < times.length; i++) {
 
          timer.restart ();
